@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Price Tracker</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  background-color: #ccc;
+}
+
+.main {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.result {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+  </style>
+</head>
+<body>
+  <header class="bg-dark text-white p-4">
+    <div class="container">
+      <h1 class="text-center mb-0">Crypto Price Tracker</h1>
+      <input type="text" id="search" class="form-control mt-3" placeholder="Search for a cryptocurrency">
+    </div>
+  </header>
+  <main class="py-4">
+    <div class="container" id="results">
+      <!-- Results will be displayed here -->
+    </div>
+  </main>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="Test.js"></script>
+</body>
+</html>
