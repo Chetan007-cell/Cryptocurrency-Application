@@ -1,63 +1,53 @@
-import React, { Component } from 'react';
+// src/CryptoPrice.js
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-class CryptoSearch extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchTerm: '',
-      results: [],
-    };
-  }
+function CryptoPrice() {
+  const [prices, setPrices] = useState({});
+  const [loading, setLoading] = useState(true);
 
-  componentDidMount() {
-    this.fetchCryptoData();
-  }
-
-  fetchCryptoData = () => {
-    const { searchTerm } = this.state;
-    const apiURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd';
-
-    fetch(apiURL)
-      .then(response => response.json())
-      .then(data => {
-        const filteredResults = data.filter(coin =>
-          coin.name.toLowerCase().includes(searchTerm.toLowerCase())
+  useEffect(() => {
+    async function fetchCryptoPrices() {
+      try {
+        const response = await axios.get(
+          'https://api.coingecko.com/api/v3/simple/price',
+          {
+            params: {
+              ids: 'bitcoin,ethereum,ripple', // Add more cryptocurrencies as needed
+              vs_currencies: 'usd', // Change the currency as needed
+            },
+          }
         );
-        this.setState({ results: filteredResults });
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  };
+        setPrices(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching cryptocurrency prices:', error);
+      }
+    }
 
-  handleInputChange = event => {
-    this.setState({ searchTerm: event.target.value }, () => {
-      this.fetchCryptoData();
-    });
-  };
+    fetchCryptoPrices();
+  }, []);
 
-  render() {
-    const { results } = this.state;
-
-    return (
-      <div>
-        <input
-          type="text"
-          id="search"
-          placeholder="Search cryptocurrencies"
-          onChange={this.handleInputChange}
-        />
-        <div id="results">
-          {results.map(coin => (
-            <div key={coin.id} className="result">
-              <h2>{coin.name}</h2>
-              <p>Price: ${coin.current_price}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h2>Cryptocurrency Prices</h2>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul>
+          <li>
+            Bitcoin (BTC): ${prices.bitcoin.usd}
+          </li>
+          <li>
+            Ethereum (ETH): ${prices.ethereum.usd}
+          </li>
+          <li>
+            Ripple (XRP): ${prices.ripple.usd}
+          </li>
+        </ul>
+      )}
+    </div>
+  );
 }
 
-export default CryptoSearch;
+export default CryptoPrice;
